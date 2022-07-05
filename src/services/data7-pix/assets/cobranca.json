@@ -1,0 +1,136 @@
+{
+  "Data": [
+    {
+      "Id": "3831849.11.00000000000000.20220622181050-OB.21.001",
+      "Filial": {
+        "CodEmpresa": 1,
+        "CodFilial": 1,
+        "Nome": "SABRINA DE ARAUJO OLIVEIRA FABIANO EIRELI",
+        "CNPJ": "00000000000000"
+      },
+      "Usuario": {
+        "CodUsuario": 1,
+        "NomeUsuario": "Administrador",
+        "EstacaoTrabalho": "MacBook-Pro-de-"
+      },
+      "Cliente": {
+        "CodCliente": 8,
+        "NomeCliente": "TEDY C. DE SOUZA",
+        "CNPJ_CPF": "03523257123",
+        "Telefone": "66 32112116",
+        "EMail": "VIVIANE.SILVA@BRINKS.COM.BR",
+        "Endereco": " RUA COLONIZADOR ENIO PIPINO,",
+        "Numero": "6101",
+        "Complemento": "INSC .MUNICIPAL: 77.94",
+        "Bairro": "ST. INDUSTRIAL NORTE",
+        "CEP": "78550542",
+        "CodigoIBGE": "5107909",
+        "NomeMunicipio": "SINOP",
+        "UF": "MT"
+      },
+      "Parcelas": [
+        {
+          "Origem": "OB",
+          "CodOrigem": "21",
+          "NumeroParcela": "001",
+          "CodFormaPagamento": "CC",
+          "DataEmissao": "2022/06/22",
+          "DataVenda": "2022/06/22",
+          "DataVencimento": "2022/07/22",
+          "ValorBruto": 1.00,
+          "ValorLiquido": 1.00,
+          "ValorParcela": 1.00,
+          "Observacao": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) "
+        }
+      ]
+    },
+    {
+      "Id": "3831849.11.00000000000000.20220622181050-OB.21.002",
+      "Filial": {
+        "CodEmpresa": 1,
+        "CodFilial": 1,
+        "Nome": "SABRINA DE ARAUJO OLIVEIRA FABIANO EIRELI",
+        "CNPJ": "00000000000000"
+      },
+      "Usuario": {
+        "CodUsuario": 1,
+        "NomeUsuario": "Administrador",
+        "EstacaoTrabalho": "MacBook-Pro-de-"
+      },
+      "Cliente": {
+        "CodCliente": 8,
+        "NomeCliente": "TEDY C. DE SOUZA",
+        "CNPJ_CPF": "03523257123",
+        "Telefone": "66 32112116",
+        "EMail": "VIVIANE.SILVA@BRINKS.COM.BR",
+        "Endereco": " RUA COLONIZADOR ENIO PIPINO,",
+        "Numero": "6101",
+        "Complemento": "INSC .MUNICIPAL: 77.94",
+        "Bairro": "ST. INDUSTRIAL NORTE",
+        "CEP": "78550542",
+        "CodigoIBGE": "5107909",
+        "NomeMunicipio": "SINOP",
+        "UF": "MT"
+      },
+      "Parcelas": [
+        {
+          "Origem": "OB",
+          "CodOrigem": "21",
+          "NumeroParcela": "002",
+          "CodFormaPagamento": "CC",
+          "DataEmissao": "2022/06/22",
+          "DataVenda": "2022/06/22",
+          "DataVencimento": "2022/07/22",
+          "ValorBruto": 1.00,
+          "ValorLiquido": 1.00,
+          "ValorParcela": 1.00,
+          "Observacao": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) "
+        }
+      ]
+    },
+    {
+      "Id": "3831849.11.00000000000000.20220622181050-OB.21.003",
+      "Filial": {
+        "CodEmpresa": 1,
+        "CodFilial": 1,
+        "Nome": "SABRINA DE ARAUJO OLIVEIRA FABIANO EIRELI",
+        "CNPJ": "00000000000000"
+      },
+      "Usuario": {
+        "CodUsuario": 1,
+        "NomeUsuario": "Administrador",
+        "EstacaoTrabalho": "MacBook-Pro-de-"
+      },
+      "Cliente": {
+        "CodCliente": 8,
+        "NomeCliente": "TEDY C. DE SOUZA",
+        "CNPJ_CPF": "60860087015716",
+        "Telefone": "66 32112116",
+        "EMail": "VIVIANE.SILVA@BRINKS.COM.BR",
+        "Endereco": " RUA COLONIZADOR ENIO PIPINO,",
+        "Numero": "6101",
+        "Complemento": "INSC .MUNICIPAL: 77.94",
+        "Bairro": "ST. INDUSTRIAL NORTE",
+        "CEP": "78550542",
+        "CodigoIBGE": "5107909",
+        "NomeMunicipio": "SINOP",
+        "UF": "MT"
+      },
+      "Parcelas": [
+        {
+          "Origem": "OB",
+          "CodOrigem": "21",
+          "NumeroParcela": "003",
+          "CodFormaPagamento": "CC",
+          "DataEmissao": "2022/06/22",
+          "DataVenda": "2022/06/22",
+          "DataVencimento": "2022/07/22",
+          "ValorBruto": 1.00,
+          "ValorLiquido": 1.00,
+          "ValorParcela": 1.00,
+          "Observacao": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) "
+        }
+      ]
+    }
+  ]
+}

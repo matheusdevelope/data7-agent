@@ -1,0 +1,68 @@
+[
+  {
+    "Id": "3831849.11.00000000000000.20220622181050-OB.21.001",
+    "Txid": "98d4a1f08f534135850f45103d8f0630",
+    "Chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "Status": "ATIVA",
+    "Criacao": "2022-06-27T20:56:18.433Z",
+    "Expiracao": "2022-06-27T21:56:18.433Z",
+    "Valor": "1.00",
+    "SolicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "Adicionais": [
+      {
+        "Nome": "Id do Pedido",
+        "Valor": "3831849.11.00000000000000.20220622181050-OB.21.001"
+      }
+    ],
+    "Loc": {
+      "Id": 17,
+      "Location": "qrcodes-pix.gerencianet.com.br/v2/9ab2ced17dcd4c8c8b682c4cde0214b7",
+      "TipoCob": "cob",
+      "Criacao": "2022-06-27T20:56:18.492Z"
+    }
+  },
+  {
+    "Id": "3831849.11.00000000000000.20220622181050-OB.21.002",
+    "Txid": "98d4a1f08f534135850f45103d8f0630",
+    "Chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "Status": "ATIVA",
+    "Criacao": "2022-06-27T20:56:18.433Z",
+    "Expiracao": "2022-06-27T21:56:18.433Z",
+    "Valor": "1.00",
+    "SolicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "Adicionais": [
+      {
+        "Nome": "Id do Pedido",
+        "Valor": "3831849.11.00000000000000.20220622181050-OB.21.002"
+      }
+    ],
+    "Loc": {
+      "Id": 17,
+      "Location": "qrcodes-pix.gerencianet.com.br/v2/9ab2ced17dcd4c8c8b682c4cde0214b7",
+      "TipoCob": "cob",
+      "Criacao": "2022-06-27T20:56:18.492Z"
+    }
+  },
+  {
+    "Id": "3831849.11.00000000000000.20220622181050-OB.21.003",
+    "Txid": "98d4a1f08f534135850f45103d8f0630",
+    "Chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "Status": "ATIVA",
+    "Criacao": "2022-06-27T20:56:18.433Z",
+    "Expiracao": "2022-06-27T21:56:18.433Z",
+    "Valor": "1.00",
+    "SolicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "Adicionais": [
+      {
+        "Nome": "Id do Pedido",
+        "Valor": "3831849.11.00000000000000.20220622181050-OB.21.003"
+      }
+    ],
+    "Loc": {
+      "Id": 17,
+      "Location": "qrcodes-pix.gerencianet.com.br/v2/9ab2ced17dcd4c8c8b682c4cde0214b7",
+      "TipoCob": "cob",
+      "Criacao": "2022-06-27T20:56:18.492Z"
+    }
+  }
+]

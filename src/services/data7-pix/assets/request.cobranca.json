@@ -1,0 +1,62 @@
+[
+  {
+    "calendario": {
+      "expiracao": 3600
+    },
+    "devedor": {
+      "cpf": "03523257123",
+      "nome": "TEDY C. DE SOUZA"
+    },
+    "valor": {
+      "original": "1"
+    },
+    "chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "solicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "infoAdicionais": [
+      {
+        "nome": "Id do Pedido",
+        "valor": "3831849.11.00000000000000.20220622181050-OB.21.001"
+      }
+    ]
+  },
+  {
+    "calendario": {
+      "expiracao": 3600
+    },
+    "devedor": {
+      "cpf": "03523257123",
+      "nome": "TEDY C. DE SOUZA"
+    },
+    "valor": {
+      "original": "1"
+    },
+    "chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "solicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "infoAdicionais": [
+      {
+        "nome": "Id do Pedido",
+        "valor": "3831849.11.00000000000000.20220622181050-OB.21.001"
+      }
+    ]
+  },
+  {
+    "calendario": {
+      "expiracao": 3600
+    },
+    "devedor": {
+      "cpf": "03523257123",
+      "nome": "TEDY C. DE SOUZA"
+    },
+    "valor": {
+      "original": "1"
+    },
+    "chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "solicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "infoAdicionais": [
+      {
+        "nome": "Id do Pedido",
+        "valor": "3831849.11.00000000000000.20220622181050-OB.21.001"
+      }
+    ]
+  }
+]

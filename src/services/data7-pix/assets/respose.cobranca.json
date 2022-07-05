@@ -1,0 +1,33 @@
+[
+  {
+    "calendario": {
+      "criacao": "2022-06-26T20:24:24.829Z",
+      "expiracao": 3600
+    },
+    "txid": "a164b0fa05264630832245337047bdd7",
+    "revisao": 0,
+    "loc": {
+      "id": 5,
+      "location": "qrcodes-pix.gerencianet.com.br/v2/fe28cb043eae4c12b1a461336e248a9c",
+      "tipoCob": "cob",
+      "criacao": "2022-06-26T20:24:24.846Z"
+    },
+    "location": "qrcodes-pix.gerencianet.com.br/v2/fe28cb043eae4c12b1a461336e248a9c",
+    "status": "ATIVA",
+    "devedor": {
+      "cpf": "03523257123",
+      "nome": "TEDY C. DE SOUZA"
+    },
+    "valor": {
+      "original": "0.01"
+    },
+    "chave": "bc89689b-11bc-4304-b2c4-c474e90e2467",
+    "solicitacaoPagador": " (LIVRE PARA ADICIONAR OBSERVACAO NO BOLETO DO CLIENTE) ",
+    "infoAdicionais": [
+      {
+        "nome": "Id do Pedido",
+        "valor": "3831849.11.00000000000000.20220622181050-OB.21.001"
+      }
+    ]
+  }
+]
