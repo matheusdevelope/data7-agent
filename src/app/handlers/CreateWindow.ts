@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 
 export default function CreateWindow(isDev: boolean) {
   const win = new BrowserWindow({
