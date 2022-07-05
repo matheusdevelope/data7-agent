@@ -1,7 +1,7 @@
 import { BrowserWindow } from 'electron';
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 
-export default function CreateWindow() {
+export default function CreateWindow(isDev: boolean) {
   const win = new BrowserWindow({
     width: 350,
     height: 410,
@@ -14,6 +14,13 @@ export default function CreateWindow() {
     },
   });
 
-  win.loadFile(resolve(__dirname, '../', '../', '../', 'index.html'));
+  if (isDev) {
+    win.loadURL('http://localhost:3001');
+    //win.webContents.openDevTools();
+  } else {
+    // win.removeMenu(); // Optional
+    win.loadFile(resolve(__dirname, '../', '../', '../', 'index.html'));
+  }
+
   return win;
 }
