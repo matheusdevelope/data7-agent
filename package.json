@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "build:dev": "npx tsc -w",
     "format": "npx prettier './src/**/*.ts' './src/**/*.js' --write",
-    "dev:pix": "cls && ts-node-dev --respawn --transpile-only ./public/services/data7-pix/server.ts",
+    "dev:pix": "cls && ts-node-dev -r tsconfig-paths/register --respawn --transpile-only ./src/services/data7-pix/server.ts",
     "dev:nodemon": "cls && nodemon --watch 'src/' --exec 'ts-node --files --transpile-only src/server.ts' -e ts",
     "dev": "cls && electron ./public/dist/app",
     "start": "electron ./public/dist/app"
@@ -40,6 +40,7 @@
     "prettier": "2.7.1",
     "ts-node": "^10.8.1",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.0.0",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
   }
