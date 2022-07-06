@@ -1,4 +1,4 @@
-import { app, dialog, ipcMain } from 'electron';
+import { app, dialog, globalShortcut, ipcMain } from 'electron';
 import * as path from 'path';
 import ControlWindow from '../handlers/ControlWindow';
 import CreateWindow from '../handlers/CreateWindow';
@@ -27,6 +27,14 @@ function RunElectron() {
   function StartElectron() {
     Window = CreateWindow();
     Tray = CreateTray(Server);
+    globalShortcut.register('f5', function () {
+      console.log('f5 is pressed');
+      Window.reload();
+    });
+    globalShortcut.register('CommandOrControl+R', function () {
+      console.log('CommandOrControl+R is pressed');
+      Window.reload();
+    });
 
     const { toggle } = ControlWindow(Window, Tray);
     Tray.on('click', toggle);
