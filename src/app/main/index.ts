@@ -5,8 +5,6 @@ import CreateWindow from '../handlers/CreateWindow';
 import CreateTray from '../handlers/CreateTray';
 import Server_Http from '../../server';
 
-const isDev = process.env.IS_DEV === 'true';
-
 let Window: any;
 let Tray: any;
 const Server = new Server_Http();
@@ -27,7 +25,7 @@ function RunElectron() {
   }
 
   function StartElectron() {
-    Window = CreateWindow(isDev);
+    Window = CreateWindow();
     Tray = CreateTray(Server);
 
     const { toggle } = ControlWindow(Window, Tray);

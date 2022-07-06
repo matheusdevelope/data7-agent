@@ -17,12 +17,6 @@
     "isolatedModules": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@public/*": ["./public/*"],
-      "@assets/*": ["./public/assets/*"],
-      "@certificates/*": ["./public/certificates/*"],
-      "@services/*": ["./public/dist/services/*"]
-    }
+    "baseUrl": "."
   }
 }
