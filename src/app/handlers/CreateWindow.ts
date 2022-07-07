@@ -17,12 +17,9 @@ export default function CreateWindow() {
   });
 
   if (!Global_State.isDev) {
-    // win.loadURL('http://localhost:3001');
-    win.loadURL('http://127.0.0.1:5500/public/index.html');
-    //win.webContents.openDevTools();
+    win.loadURL('http://localhost:3000');
   } else {
-    // win.removeMenu(); // Optional
-    win.loadFile(resolve(__dirname, '../', '../', '../', 'index.html'));
+    win.loadFile(resolve(__dirname, '../', '../', 'index.html'));
   }
 
   return win;

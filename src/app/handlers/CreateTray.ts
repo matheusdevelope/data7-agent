@@ -1,8 +1,8 @@
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import { resolve } from 'path';
 
-const assets_path = resolve(__dirname, '../', '../', '../', 'assets');
-const iconTrayPath = resolve(assets_path, 'se7e_icon.png');
+const assets_path = resolve(__dirname, '../', '../', 'assets');
+const iconTrayPath = resolve(assets_path, 'trayicon.png');
 
 export default function CreateTray(Server: any) {
   const tray = new Tray(iconTrayPath);

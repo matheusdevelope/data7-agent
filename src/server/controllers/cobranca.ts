@@ -10,17 +10,17 @@ export default class CobrancaController {
   public static async post(req: Request, res: Response) {
     const qrcode = req.body.qrcode;
 
-    if (req.body.action === 'open')
-      OpenQrCode({
-        base64_qrcode: qrcode,
-        link_copy_paste: '',
-        devices: [EnumDevices.desktop],
-        callback: (ret) => {
-          console.log(ret);
-        },
-      });
+    // if (req.body.action === 'open')
+    //   OpenQrCode({
+    //     base64_qrcode: qrcode,
+    //     link_copy_paste: '',
+    //     devices: [EnumDevices.desktop],
+    //     callback: (ret) => {
+    //       console.log(ret);
+    //     },
+    //   });
 
-    if (req.body.action === 'close') CloseQrCode({ callback: (ret) => console.log(ret) });
+    // if (req.body.action === 'close') CloseQrCode({ callback: (ret) => console.log(ret) });
 
     res.send('Cobranca post');
   }

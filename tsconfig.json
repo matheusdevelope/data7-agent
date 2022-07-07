@@ -6,8 +6,6 @@
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "rootDir": "src",
-    "outDir": "public/dist",
     "moduleDetection": "auto",
     "resolveJsonModule": true,
     "allowJs": true,
@@ -17,6 +15,10 @@
     "isolatedModules": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "."
-  }
+    "baseUrl": ".",
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["front"]
 }
