@@ -16,7 +16,7 @@ export default function CreateWindow() {
     },
   });
 
-  if (!Global_State.isDev) {
+  if (Global_State.isDev) {
     win.loadURL('http://localhost:3000');
   } else {
     win.loadFile(resolve(__dirname, '../', '../', 'index.html'));
