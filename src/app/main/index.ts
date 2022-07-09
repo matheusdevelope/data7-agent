@@ -10,6 +10,7 @@ let Tray: any;
 const Server = new Server_Http();
 
 function RunElectron() {
+  console.log('f5 is pressed!!');
   // Handle creating/removing shortcuts on Windows when installing/uninstalling.
   if (require('electron-squirrel-startup')) {
     // eslint-disable-line global-require
@@ -28,7 +29,7 @@ function RunElectron() {
     Window = CreateWindow();
     Tray = CreateTray(Server);
     globalShortcut.register('f5', function () {
-      console.log('f5 is pressed');
+      console.log('f5 is pressed!!');
       Window.reload();
     });
     globalShortcut.register('CommandOrControl+R', function () {
