@@ -3,13 +3,14 @@ import cors from 'cors';
 import http from 'http';
 
 import ApiRoute from './routes';
+import { Global_State } from '../global_state';
 
 export default class Server_Http {
   private app = express();
   private server = http.createServer(this.app);
   private publicPath = '../../public';
 
-  constructor(private readonly port: number = 3000) {
+  constructor(private readonly port: number = Global_State.port_server_http) {
     this.initialize();
   }
 

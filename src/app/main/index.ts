@@ -10,7 +10,6 @@ let Tray: any;
 const Server = new Server_Http();
 
 function RunElectron() {
-  console.log('f5 is pressed!!');
   // Handle creating/removing shortcuts on Windows when installing/uninstalling.
   if (require('electron-squirrel-startup')) {
     // eslint-disable-line global-require
@@ -19,10 +18,10 @@ function RunElectron() {
 
   if (process.defaultApp) {
     if (process.argv.length >= 2) {
-      app.setAsDefaultProtocolClient('electron-fiddle', process.execPath, [path.resolve(process.argv[1])]);
+      app.setAsDefaultProtocolClient('data7', process.execPath, [path.resolve(process.argv[1])]);
     }
   } else {
-    app.setAsDefaultProtocolClient('electron-fiddle');
+    app.setAsDefaultProtocolClient('data7');
   }
 
   function StartElectron() {
@@ -30,10 +29,6 @@ function RunElectron() {
     Tray = CreateTray(Server);
     globalShortcut.register('f5', function () {
       console.log('f5 is pressed!!');
-      Window.reload();
-    });
-    globalShortcut.register('CommandOrControl+R', function () {
-      console.log('CommandOrControl+R is pressed');
       Window.reload();
     });
 
@@ -50,14 +45,14 @@ function RunElectron() {
       // Someone tried to run a second instance, we should focus our window.
       if (Window) {
         const { show } = ControlWindow(Window, Tray);
-        const deeplinkingUrl = commandLine.find((arg) => arg.startsWith('electron-fiddle://'));
+        const deeplinkingUrl = commandLine.find((arg) => arg.startsWith('data7://'));
 
-        if (deeplinkingUrl?.includes('electron-fiddle://open/?qrcode=')) {
+        if (deeplinkingUrl?.includes('data7://open/?qrcode=')) {
           console.log('opening');
           Window.webContents.send('new-qrcode', deeplinkingUrl.split('open/?qrcode=')[1]);
           show();
         }
-        if (deeplinkingUrl?.includes('electron-fiddle://close')) {
+        if (deeplinkingUrl?.includes('data7://close')) {
           console.log('Closing');
           Window.webContents.send('clean-qrcode', '');
           Window.hide();
