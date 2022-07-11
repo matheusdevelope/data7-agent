@@ -12,11 +12,12 @@ export interface ICallback {
   error: any;
 }
 export interface IOpenQrCode {
-  base64_qrcode: string;
-  link_copy_paste: string;
+  qrcode: IDataQrCode;
   devices: EnumDevices[];
   callback: (callback: ICallback) => void;
 }
 export interface ICloseQrCode {
+  qrcode: IDataQrCode;
+  devices: EnumDevices[];
   callback: (callback: ICallback) => void;
 }

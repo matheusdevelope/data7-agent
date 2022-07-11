@@ -6,6 +6,7 @@ import CreateTray from '../handlers/CreateTray';
 import Server_Http from '../../server';
 import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
 import { Global_State } from '../../global_state';
+import ParseURL from 'parse-url';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -49,37 +50,42 @@ function RunElectron() {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
       // Someone tried to run a second instance, we should focus our window.
       if (Window) {
-        const { show } = ControlWindow(Window, Tray);
         const deeplinkingUrl = commandLine.find((arg) => arg.startsWith('data7://'));
-
-        if (deeplinkingUrl?.includes('data7://open/?qrcode=')) {
-          console.log('opening');
-          const qr = {
-            id: '',
-            img: deeplinkingUrl.split('open/?qrcode=')[1],
-            link: 'a',
-            phone: '',
-            awaiting_payment: true,
-            confirmed_payment: false,
-            canceled: false,
-            message: 'Aguardando pagamento Pix...',
-          };
-          Window.webContents.send('new-qrcode', qr);
-          // show();
+        function CallQrCode() {
+          if (deeplinkingUrl?.includes('data7://open/?qrcode=')) {
+            console.log('opening');
+            const qr = {
+              id: '',
+              img: deeplinkingUrl.split('open/?qrcode=')[1],
+              link: 'a',
+              phone: '',
+              awaiting_payment: true,
+              confirmed_payment: false,
+              canceled: false,
+              message: 'Aguardando pagamento Pix...',
+            };
+            Window.webContents.send('new-qrcode', qr);
+            // show();
+          }
+          if (deeplinkingUrl?.includes('data7://close')) {
+            console.log('Closing');
+            Window.webContents.send(Global_State.events.update_qrcode, {
+              id: '',
+              img: '',
+              link: 'a',
+              phone: '',
+              awaiting_payment: false,
+              confirmed_payment: false,
+              canceled: true,
+              message: 'Aguardando pagamento Pix...',
+            });
+            //Window.hide();
+          }
         }
-        if (deeplinkingUrl?.includes('data7://close')) {
-          console.log('Closing');
-          Window.webContents.send(Global_State.events.update_qrcode, {
-            id: '',
-            img: '',
-            link: 'a',
-            phone: '',
-            awaiting_payment: false,
-            confirmed_payment: false,
-            canceled: true,
-            message: 'Aguardando pagamento Pix...',
-          });
-          //Window.hide();
+        if (deeplinkingUrl) {
+          console.log('deeplinkingUrl', deeplinkingUrl);
+          const parsed_url = ParseURL(deeplinkingUrl);
+          console.log(parsed_url);
         }
       }
     });

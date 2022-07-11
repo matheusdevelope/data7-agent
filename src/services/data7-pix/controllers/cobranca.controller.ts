@@ -15,14 +15,20 @@ export default class CobrancaController {
 
     if (req.body.action === 'open')
       OpenQrCode({
-        base64_qrcode: qrcode,
-        link_copy_paste: '',
+        qrcode: qrcode,
         devices: [EnumDevices.desktop],
         callback: (ret) => {
           console.log(ret);
         },
       });
-    if (req.body.action === 'close') CloseQrCode({ callback: (ret) => console.log(ret) });
+    if (req.body.action === 'close')
+      CloseQrCode({
+        qrcode: qrcode,
+        devices: [EnumDevices.desktop],
+        callback: (ret) => {
+          console.log(ret);
+        },
+      });
 
     res.send('Cobranca post');
   }
