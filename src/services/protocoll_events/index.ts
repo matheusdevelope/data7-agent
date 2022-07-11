@@ -10,4 +10,20 @@ function CloseQrCode({ callback }: ICloseQrCode) {
   return callback({ type: EnumTypeOfCallback.success, message: 'Sucess on close window', error: null });
 }
 
-export { OpenQrCode, CloseQrCode, EnumDevices };
+function SendMessageOnWhatsapp(data: IWhatsAppMessage) {
+  const baseProtocoll = 'start whatsapp://send?';
+  const text = 'text=';
+  const and = '^&';
+  const phone = 'phone=55';
+  function apenasNumeros(string: string) {
+    return string.replace(/[^0-9]/g, '');
+  }
+  function EncodeURI(text: string) {
+    return encodeURIComponent(text);
+  }
+  const ToExec = baseProtocoll + phone + apenasNumeros(data.phone) + and + text + EncodeURI(data.message);
+  exec(ToExec, (e, stdout, stderr) => {
+    stderr && console.error(stderr);
+  });
+}
+export { OpenQrCode, CloseQrCode, EnumDevices, SendMessageOnWhatsapp };

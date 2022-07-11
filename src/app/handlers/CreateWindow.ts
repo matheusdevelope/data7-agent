@@ -2,13 +2,14 @@ import { BrowserWindow } from 'electron';
 import { resolve } from 'path';
 import { Global_State } from '../../global_state';
 
-export default function CreateWindow() {
+export default function CreateWindow(): BrowserWindow {
   const win = new BrowserWindow({
-    width: 350,
-    height: 410,
+    width: 500,
+    height: 460,
     show: true,
     alwaysOnTop: true,
     frame: true,
+    autoHideMenuBar: true,
     resizable: true,
     fullscreenable: false,
     webPreferences: {

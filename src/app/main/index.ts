@@ -1,21 +1,23 @@
-import { app, dialog, globalShortcut, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, globalShortcut, ipcMain } from 'electron';
 import * as path from 'path';
 import ControlWindow from '../handlers/ControlWindow';
 import CreateWindow from '../handlers/CreateWindow';
 import CreateTray from '../handlers/CreateTray';
 import Server_Http from '../../server';
+import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
+import { Global_State } from '../../global_state';
 
-let Window: any;
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) {
+  // eslint-disable-line global-require
+  app.quit();
+}
+
+let Window: BrowserWindow;
 let Tray: any;
 const Server = new Server_Http();
 
-function RunElectron() {
-  // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-  if (require('electron-squirrel-startup')) {
-    // eslint-disable-line global-require
-    app.quit();
-  }
-
+function RegisterDeepLink() {
   if (process.defaultApp) {
     if (process.argv.length >= 2) {
       app.setAsDefaultProtocolClient('data7', process.execPath, [path.resolve(process.argv[1])]);
@@ -23,7 +25,10 @@ function RunElectron() {
   } else {
     app.setAsDefaultProtocolClient('data7');
   }
+}
+RegisterDeepLink();
 
+function RunElectron() {
   function StartElectron() {
     Window = CreateWindow();
     Tray = CreateTray(Server);
@@ -50,12 +55,12 @@ function RunElectron() {
         if (deeplinkingUrl?.includes('data7://open/?qrcode=')) {
           console.log('opening');
           Window.webContents.send('new-qrcode', deeplinkingUrl.split('open/?qrcode=')[1]);
-          show();
+          // show();
         }
         if (deeplinkingUrl?.includes('data7://close')) {
           console.log('Closing');
           Window.webContents.send('clean-qrcode', '');
-          Window.hide();
+          //Window.hide();
         }
       }
     });
@@ -79,16 +84,12 @@ function RunElectron() {
     });
   }
 
-  // Quit when all windows are closed, except on macOS. There, it's common
-  // for applications and their menu bar to stay active until the user quits
-  // explicitly with Cmd + Q.
-
-  ipcMain.on('open-qrcode', async (event, params) => {
-    console.log('open-qrcode', params);
+  ipcMain.on(Global_State.events.open_qrcode, async (event, params) => {
+    Window.show();
     return true;
   });
-  ipcMain.on('close-qrcode', async (event, params) => {
-    console.log('close-qrcode', params);
+  ipcMain.on(Global_State.events.close_qrcode, async (event, params) => {
+    Window.hide();
     return true;
   });
 }

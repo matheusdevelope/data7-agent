@@ -11,7 +11,7 @@ export default function ControlWindow(win: any, tray: any) {
     // pegar o posicionamento da win / tray
     const { x, y } = getPosition();
     // atualizar o posicionamento da win
-    win.setPosition(x, y, false);
+    // win.setPosition(x, y, false);
     // mostrar a win
     win.show();
     win.focus();
