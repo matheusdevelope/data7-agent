@@ -15,7 +15,7 @@ if (require('electron-squirrel-startup')) {
 
 let Window: BrowserWindow;
 let Tray: any;
-const Server = new Server_Http();
+const Server = Server_Http();
 
 function RegisterDeepLink() {
   if (process.defaultApp) {
@@ -54,12 +54,31 @@ function RunElectron() {
 
         if (deeplinkingUrl?.includes('data7://open/?qrcode=')) {
           console.log('opening');
-          Window.webContents.send('new-qrcode', deeplinkingUrl.split('open/?qrcode=')[1]);
+          const qr = {
+            id: '',
+            img: deeplinkingUrl.split('open/?qrcode=')[1],
+            link: 'a',
+            phone: '',
+            awaiting_payment: true,
+            confirmed_payment: false,
+            canceled: false,
+            message: 'Aguardando pagamento Pix...',
+          };
+          Window.webContents.send('new-qrcode', qr);
           // show();
         }
         if (deeplinkingUrl?.includes('data7://close')) {
           console.log('Closing');
-          Window.webContents.send('clean-qrcode', '');
+          Window.webContents.send(Global_State.events.update_qrcode, {
+            id: '',
+            img: '',
+            link: 'a',
+            phone: '',
+            awaiting_payment: false,
+            confirmed_payment: false,
+            canceled: true,
+            message: 'Aguardando pagamento Pix...',
+          });
           //Window.hide();
         }
       }

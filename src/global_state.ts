@@ -5,7 +5,7 @@ const Global_State = {
     open_qrcode: 'open-qrcode',
     close_qrcode: 'close-qrcode',
     new_qrcode: 'new-qrcode',
-    clean_qrcode: 'clean-qrcode',
+    update_qrcode: 'update-qrcode',
     send_message_whats: 'send-message-whats',
   },
 };

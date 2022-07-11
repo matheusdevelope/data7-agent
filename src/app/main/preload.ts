@@ -4,13 +4,14 @@ import { CancelPix, RefreshPix } from '../../services/Api_Pix';
 import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
 
 function RegisterEventOpenQr(event: string, cb: Function) {
-  ipcRenderer.on(event, (e, ...args) => {
-    cb(args[0]);
+  ipcRenderer.on(event, (e, args: IDataQrCode) => {
+    cb(args);
   });
 }
-function RegisterEventCloseQr(event: string, cb: Function) {
-  ipcRenderer.on(event, (e, ...args) => {
-    cb(args[0]);
+
+function RegisterEventUpdateQr(event: string, cb: Function) {
+  ipcRenderer.on(event, (e, args: IDataQrCode) => {
+    cb(args);
   });
 }
 async function CancelQr(id_qrcode: string): Promise<ICancelQr> {
@@ -59,7 +60,7 @@ function SendWhats(data: IWhatsAppMessage) {
 
 export const ElectronAPI = {
   RegisterEventOpenQr,
-  RegisterEventCloseQr,
+  RegisterEventUpdateQr,
   CancelQr,
   OpenQr,
   CloseQr,

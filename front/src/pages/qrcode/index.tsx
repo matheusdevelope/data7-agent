@@ -81,21 +81,29 @@ export default function QrCode() {
   const [dialog, setDialog] = useState<IDialog>(DefaultDialog);
   const phoneRef = useRef<HTMLInputElement>(null);
   function AddListennersInApp() {
-    window.ElectronAPI?.RegisterEventOpenQr('new-qrcode', (qrcode: any) => {
+    window.ElectronAPI?.RegisterEventOpenQr('new-qrcode', (qrcode: IDataQrCode) => {
       setDataQrcode({
-        ...NewStatus('Aguardando recebimento Pix...'),
-        img: qrcode,
-        awaiting_payment: true,
+        ...qrcode,
+        message: MessageBasedInStatus(qrcode),
       });
       window.ElectronAPI.OpenQr();
     });
-    window.ElectronAPI?.RegisterEventCloseQr('clean-qrcode', () => {
+    window.ElectronAPI?.RegisterEventUpdateQr('update-qrcode', (qrcode: IDataQrCode) => {
       setDataQrcode({
-        ...NewStatus('Pix recebido com sucesso!'),
-        confirmed_payment: true,
+        ...qrcode,
+        message: MessageBasedInStatus(qrcode),
       });
-      CloseWindow(2000);
+      if (qrcode.canceled === true || qrcode.confirmed_payment === true) {
+        CloseWindow(2000);
+      }
     });
+  }
+  function MessageBasedInStatus(qrcode: IDataQrCode) {
+    if (qrcode.awaiting_payment) return 'Aguardando recebimento Pix...';
+    if (qrcode.confirmed_payment) return 'Pix recebido com sucesso!';
+    if (qrcode.canceled) return 'O pagamento por PIX foi cancelado.';
+    if (qrcode.error) return 'Houve um erro ao processar a solicitação.';
+    return 'Status não informado';
   }
   function CloseWindow(time: number) {
     setTimeout(() => {
