@@ -6,7 +6,11 @@ const iconTrayPath = resolve(assets_path, 'trayicon.png');
 
 export default function CreateTray(Server: any) {
   const tray = new Tray(iconTrayPath);
-
+  Server.execute(() => {
+    menuTemplate[1].enabled = false;
+    menuTemplate[2].enabled = true;
+    buildTrayMenu(menuTemplate);
+  });
   tray.setToolTip('PIX - Se7e Sistemas');
 
   const menuTemplate = [

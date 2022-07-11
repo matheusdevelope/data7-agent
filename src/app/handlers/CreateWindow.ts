@@ -6,7 +6,7 @@ export default function CreateWindow(): BrowserWindow {
   const win = new BrowserWindow({
     width: 500,
     height: 460,
-    show: true,
+    show: false,
     alwaysOnTop: true,
     frame: true,
     autoHideMenuBar: true,
