@@ -23,7 +23,7 @@ import Dialog from '../../components/modal_dialog';
 const InitialPix: IDataQrCode = {
   id: '',
   img: '',
-  link: 'aa',
+  link: 'a',
   phone: '',
   awaiting_payment: true,
   confirmed_payment: false,
@@ -102,7 +102,7 @@ export default function QrCode() {
       window.ElectronAPI.CloseQr();
       setDataQrcode(InitialPix);
       setPhone(dataQrCode.phone);
-      // setDialog({ ...DefaultDialog });
+      setDialog({ ...DefaultDialog });
     }, time);
   }
   function NewStatus(message: string) {
@@ -116,7 +116,6 @@ export default function QrCode() {
     };
   }
   function CancelPix() {
-    // if (confirm('Tem certeza que deseja solicitar o cancelamento?')) {
     setDialog({
       ...dialog,
       isOpen: true,
@@ -125,7 +124,10 @@ export default function QrCode() {
         setDialog({ ...DefaultDialog });
         CallCancel();
       },
-      onClickCancel: () => setDialog({ ...DefaultDialog }),
+      onClickCancel: () => {
+        setDialog({ ...DefaultDialog });
+        phoneRef.current?.focus();
+      },
       textbuttonOK: 'Sim',
     });
 
@@ -164,9 +166,7 @@ export default function QrCode() {
   function SendMessageToWhats(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (phone.length < 15) {
-      AlertDialog('Telefone Inválido, verifique!', () => {
-        phoneRef.current?.focus();
-      });
+      AlertDialog('Telefone Inválido, verifique!');
       return;
     }
     window.ElectronAPI.SendWhats({
@@ -182,6 +182,7 @@ export default function QrCode() {
       onClickOK: () => {
         setDialog({ ...DefaultDialog });
         callback && callback();
+        phoneRef.current?.focus();
       },
     });
   }
@@ -189,6 +190,10 @@ export default function QrCode() {
   useEffect(() => {
     AddListennersInApp();
   }, []);
+
+  useEffect(() => {
+    phoneRef.current?.focus();
+  }, [dataQrCode.img]);
 
   return (
     <Container className="App">

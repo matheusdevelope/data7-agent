@@ -3,6 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+* :focus {
+  /* border: 1px solid rgba(55, 140, 204, 0.8) !important; */
+  outline: 1px solid rgba(55, 140, 204, 0.8) !important;
+}
+
 body {
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',

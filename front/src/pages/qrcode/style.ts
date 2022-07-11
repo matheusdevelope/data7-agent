@@ -9,8 +9,9 @@ export const Container = styled.div`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 8px;
-  background-color: #10425d;
+  background-color: #232e7d; //#10425d;
   height: 40px;
   color: #fff;
   font-size: 22px;
@@ -84,6 +85,6 @@ export const Button = styled.button`
   font-weight: bold;
   height: 30px;
   min-width: max-content;
-  background: #0069d9;
+  background: #348ccb; //#0069d9;
   color: #fff;
 `;

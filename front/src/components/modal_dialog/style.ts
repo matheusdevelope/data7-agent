@@ -21,7 +21,7 @@ export const AreaMessage = styled.div`
   max-width: 370px;
   background-color: #fff;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(35, 46, 125, 0.5);
 `;
 export const LineButtons = styled.div`
   display: flex;
@@ -56,11 +56,4 @@ export const Button = styled.button`
   width: 80px;
   background: #fff;
   color: #000;
-  :focus {
-    border: 2px solid rgba(240, 220, 156, 1);
-    /* background-color: rgba(0, 0, 0, 0.2); */
-  }
-  :hover {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
 `;
