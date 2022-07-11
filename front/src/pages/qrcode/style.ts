@@ -50,6 +50,15 @@ export const Footer = styled.div`
   width: 100%;
   max-width: 400px;
 `;
+export const Form = styled.form`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  max-width: 400px;
+`;
+
 export const LineInput = styled.div`
   display: flex;
   max-width: 60%;

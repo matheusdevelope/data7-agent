@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { CancelIcon, RefreshIcon, WhatsIcon } from '../../svg';
 import DoneAnimation from '../../svg/animations/done.json';
@@ -12,22 +12,30 @@ import {
   Column,
   Container,
   Footer,
+  Form,
   Header,
   ImgQrCode,
   Input,
   LineInput,
 } from './style';
-const temp_img = ''; //  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAYAAABUmhYnAAAAAklEQVR4AewaftIAAAKwSURBVO3BQa7jSAwFwXyE7n/lHC+5KkCQ7OlPMCJ+sMYo1ijFGqVYoxRrlGKNUqxRijVKsUYp1ijFGqVYoxRrlGKNUqxRijXKxUNJ+CWVJ5LQqZwk4ZdUnijWKMUapVijXLxM5U1JuCMJnUqn8oTKm5LwpmKNUqxRijXKxZcl4Q6VO5JwkoQTlSeScIfKNxVrlGKNUqxRLoZT6ZLQJaFT+cuKNUqxRinWKMUapVijFGuUYo1y8WUqv6TSJaFT6ZLwhMq/pFijFGuUYo1y8bIkTJaEf1mxRinWKMUaJX7whyXhTSp/WbFGKdYoxRrl4qEkdCpdEt6k0qmcJKFT6ZJwkoQ3qXxTsUYp1ijFGuXiIZUTlS4JncodSehUuiS8SaVLQqfSJeGOJHQqTxRrlGKNUqxR4gcvSkKn0iXhRKVLQqfSJeEJlS4JncpJEp5QeVOxRinWKMUaJX7woiScqDyRhE7lJAmdyhNJeELlm4o1SrFGKdYo8YMHktCpdEn4JZWTJHQqXRI6lZMknKh0SehU3lSsUYo1SrFGiR/8YUk4UemS8CaVkyTcofJEsUYp1ijFGuXioST8kkqn0iWhS0Kn0iWhU+mScEcSOpUuCZ3Km4o1SrFGKdYoFy9TeVMSTpJwotIl4SQJJyp3JKFT6ZLQqTxRrFGKNUqxRrn4siTcofJNKl0SOpWTJHQqJypdEjqVNxVrlGKNUqxRLoZR+SaVLgknSehUvqlYoxRrlGKNcjFMEjqVLgmdSpeETqVLQqdykoRfKtYoxRqlWKNcfJnKN6ncoXKicqJykoT/U7FGKdYoxRrl4mVJ+KUkdCpdEk5UuiR0KneonCShU3lTsUYp1ijFGiV+sMYo1ijFGqVYoxRrlGKNUqxRijVKsUYp1ijFGqVYoxRrlGKNUqxRijXKf3weEuTKsbeUAAAAAElFTkSuQmCC';
+import Dialog from '../../components/modal_dialog';
 
 const InitialPix: IDataQrCode = {
   id: '',
-  img: temp_img,
-  link: '',
+  img: '',
+  link: 'aa',
   phone: '',
   awaiting_payment: true,
   confirmed_payment: false,
   canceled: false,
   message: 'Aguardando pagamento Pix...',
+};
+const DefaultDialog: IDialog = {
+  isOpen: false,
+  title: 'Atenção',
+  message: '',
+  onClickOK: () => null,
+  onClickCancel: undefined,
 };
 function RenderAreaQrCode(dataQrCode: IDataQrCode) {
   return (
@@ -70,6 +78,8 @@ function maskPhone(valor: string) {
 export default function QrCode() {
   const [dataQrCode, setDataQrcode] = useState<IDataQrCode>(InitialPix);
   const [phone, setPhone] = useState(maskPhone(dataQrCode.phone || ''));
+  const [dialog, setDialog] = useState<IDialog>(DefaultDialog);
+  const phoneRef = useRef<HTMLInputElement>(null);
   function AddListennersInApp() {
     window.ElectronAPI?.RegisterEventOpenQr('new-qrcode', (qrcode: any) => {
       setDataQrcode({
@@ -91,6 +101,8 @@ export default function QrCode() {
     setTimeout(() => {
       window.ElectronAPI.CloseQr();
       setDataQrcode(InitialPix);
+      setPhone(dataQrCode.phone);
+      // setDialog({ ...DefaultDialog });
     }, time);
   }
   function NewStatus(message: string) {
@@ -103,8 +115,21 @@ export default function QrCode() {
       error: undefined,
     };
   }
-  async function CancelPix() {
-    if (confirm('Tem certeza que deseja solicitar o cancelamento?')) {
+  function CancelPix() {
+    // if (confirm('Tem certeza que deseja solicitar o cancelamento?')) {
+    setDialog({
+      ...dialog,
+      isOpen: true,
+      message: 'Tem certeza que deseja solicitar o cancelamento?',
+      onClickOK: () => {
+        setDialog({ ...DefaultDialog });
+        CallCancel();
+      },
+      onClickCancel: () => setDialog({ ...DefaultDialog }),
+      textbuttonOK: 'Sim',
+    });
+
+    async function CallCancel() {
       const result = await window.ElectronAPI.CancelQr(dataQrCode.id);
       if (result.canceled) {
         setDataQrcode({ ...NewStatus(result.message), canceled: result.canceled });
@@ -127,21 +152,40 @@ export default function QrCode() {
 
     if (result.error) {
       setDataQrcode({ ...NewStatus(result.message), error: result.error });
-      alert('Houve um erro ao processar a solicitação: ' + JSON.stringify(result.error, null, 2));
+      AlertDialog('Houve um erro ao processar a solicitação: ' + JSON.stringify(result.error, null, 2));
       return;
     }
     if (result.awaiting_payment) {
       setDataQrcode({ ...NewStatus(result.message), awaiting_payment: true });
-      alert('Aguardando confirmação do recebimento do Pix. Aguarde.');
+      AlertDialog('Aguardando confirmação do recebimento do Pix.');
       return;
     }
   }
-  function SendMessageToWhats() {
+  function SendMessageToWhats(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (phone.length < 15) {
+      AlertDialog('Telefone Inválido, verifique!', () => {
+        phoneRef.current?.focus();
+      });
+      return;
+    }
     window.ElectronAPI.SendWhats({
       message: `Olá, seque abaixo o link copia e cola do seu PIX, basta copiar e efetuar o pagamento no seu aplicativo preferido. 👇🏻\n\n${dataQrCode.link}`,
       phone: phone,
     });
   }
+  function AlertDialog(message: string, callback?: Function) {
+    setDialog({
+      ...dialog,
+      isOpen: true,
+      message: message,
+      onClickOK: () => {
+        setDialog({ ...DefaultDialog });
+        callback && callback();
+      },
+    });
+  }
+
   useEffect(() => {
     AddListennersInApp();
   }, []);
@@ -161,20 +205,32 @@ export default function QrCode() {
       {RenderAreaQrCode(dataQrCode)}
       {dataQrCode.link && (
         <Footer>
-          <LineInput>
-            <WhatsIcon />
-            <Input
-              value={phone}
-              onChange={(e) => {
-                setPhone(maskPhone(e.target.value));
-              }}
-              type="text"
-              placeholder="Whatsapp"
-            />
-          </LineInput>
-          <Button onClick={SendMessageToWhats}>Enviar Link</Button>
+          <Form onSubmit={SendMessageToWhats}>
+            <LineInput>
+              <WhatsIcon />
+              <Input
+                ref={phoneRef}
+                value={phone}
+                onChange={(e) => {
+                  setPhone(maskPhone(e.target.value));
+                }}
+                type="text"
+                placeholder="Whatsapp"
+              />
+            </LineInput>
+            <Button type="submit">Enviar Link</Button>
+          </Form>
         </Footer>
       )}
+      <Dialog
+        isOpen={dialog.isOpen}
+        title={dialog.title}
+        message={dialog.message}
+        onClickOK={dialog.onClickOK}
+        onClickCancel={dialog.onClickCancel}
+        textbuttonOK={dialog.textbuttonOK}
+        textbuttonCancel={dialog.textbuttonCancel}
+      />
     </Container>
   );
 }
