@@ -21,7 +21,7 @@ import {
 import Dialog from '../../components/modal_dialog';
 
 const InitialPix: IDataQrCode = {
-  action: 'none',
+  action: '',
   id: '',
   img: '',
   link: '',
@@ -29,7 +29,7 @@ const InitialPix: IDataQrCode = {
   awaiting_payment: true,
   confirmed_payment: false,
   canceled: false,
-  message: 'Aguardando pagamento Pix...',
+  message: 'Aguardando Ação',
 };
 const DefaultDialog: IDialog = {
   isOpen: false,
@@ -39,35 +39,49 @@ const DefaultDialog: IDialog = {
   onClickCancel: undefined,
 };
 function RenderAreaQrCode(dataQrCode: IDataQrCode) {
-  return (
-    <AreaQrCode>
-      {dataQrCode.awaiting_payment && (
-        <Column>
-          <ImgQrCode src={dataQrCode.img} />
-          <p>{dataQrCode.message}</p>
-          <Player src={LoadingAnimation} autoplay loop style={{ height: 60, margin: 0 }} />
-        </Column>
-      )}
-      {dataQrCode.confirmed_payment && (
-        <Column>
-          <Player src={DoneAnimation} autoplay loop style={{ height: 300 }} />
-          <p>{dataQrCode.message}</p>
-        </Column>
-      )}
-      {dataQrCode.canceled && (
-        <Column>
-          <Player src={CancelAnimation} autoplay loop style={{ height: 300 }} />
-          <p>{dataQrCode.message}</p>
-        </Column>
-      )}
-      {dataQrCode.error && (
-        <Column>
-          <Player src={ErrorAnimation} autoplay loop style={{ height: 300 }} />
-          <p>{dataQrCode.message}</p>
-        </Column>
-      )}
-    </AreaQrCode>
-  );
+  function Awaiting() {
+    return (
+      <Column>
+        <ImgQrCode src={dataQrCode.img} />
+        <p>{dataQrCode.message}</p>
+        <Player src={LoadingAnimation} autoplay loop style={{ height: 60, margin: 0 }} />
+      </Column>
+    );
+  }
+  function Confirmed() {
+    return (
+      <Column>
+        <Player src={DoneAnimation} autoplay loop style={{ height: 300 }} />
+        <p>{dataQrCode.message}</p>
+      </Column>
+    );
+  }
+  function Canceled() {
+    return (
+      <Column>
+        <Player src={CancelAnimation} autoplay loop style={{ height: 300 }} />
+        <p>{dataQrCode.message}</p>
+      </Column>
+    );
+  }
+  function Error() {
+    return (
+      <Column>
+        <Player src={ErrorAnimation} autoplay loop style={{ height: 300 }} />
+        <p>{dataQrCode.message}</p>
+      </Column>
+    );
+  }
+
+  function SelectAnimation() {
+    if (!dataQrCode.id || (!dataQrCode.img && dataQrCode.action !== 'close') || !dataQrCode.action) return Error();
+    if (dataQrCode.confirmed_payment) return Confirmed();
+    if (dataQrCode.canceled) return Canceled();
+    if (dataQrCode.error) return Error();
+    return Awaiting();
+  }
+
+  return <AreaQrCode>{SelectAnimation()}</AreaQrCode>;
 }
 function maskPhone(valor: string) {
   valor = valor.replace(/\D/g, '');
@@ -75,7 +89,17 @@ function maskPhone(valor: string) {
   valor = valor.replace(/(\d)(\d{4})$/, '$1-$2');
   return valor;
 }
-
+function MessageBasedInStatus(qrcode: IDataQrCode) {
+  if (!qrcode.action) return 'A Ação não foi infomarda, verifique!';
+  if (!qrcode.id) return 'O ID do PIX não foi infomardo, verifique!';
+  if (!qrcode.img && qrcode.action !== 'close') return 'O QrCode não foi infomardo, verifique!';
+  if (qrcode.message) return qrcode.message;
+  if (qrcode.confirmed_payment) return 'Pix recebido com sucesso!';
+  if (qrcode.canceled) return 'O pagamento por PIX foi cancelado.';
+  if (qrcode.error) return 'Houve um erro ao processar a solicitação.';
+  if (qrcode.awaiting_payment) return 'Aguardando recebimento Pix...';
+  return 'Status não informado';
+}
 export default function QrCode() {
   const [dataQrCode, setDataQrcode] = useState<IDataQrCode>(InitialPix);
   const [phone, setPhone] = useState(maskPhone(dataQrCode.phone || ''));
@@ -85,19 +109,14 @@ export default function QrCode() {
     window.ElectronAPI?.RegisterEventUpdateQr('update-qrcode', (qrcode: IDataQrCode) => {
       setDataQrcode({
         ...qrcode,
-        message: qrcode.message || MessageBasedInStatus(qrcode),
+        message: MessageBasedInStatus(qrcode),
       });
+      setPhone(maskPhone(qrcode.phone || ''));
       if (qrcode.action === 'close') return CloseWindow(2000);
       return window.ElectronAPI.OpenQr();
     });
   }
-  function MessageBasedInStatus(qrcode: IDataQrCode) {
-    if (qrcode.awaiting_payment) return 'Aguardando recebimento Pix...';
-    if (qrcode.confirmed_payment) return 'Pix recebido com sucesso!';
-    if (qrcode.canceled) return 'O pagamento por PIX foi cancelado.';
-    if (qrcode.error) return 'Houve um erro ao processar a solicitação.';
-    return 'Status não informado';
-  }
+
   function CloseWindow(time: number) {
     setTimeout(() => {
       window.ElectronAPI.CloseQr();
@@ -106,6 +125,7 @@ export default function QrCode() {
       setDialog({ ...DefaultDialog });
     }, time);
   }
+
   function NewStatus(message: string) {
     return {
       ...dataQrCode,
@@ -116,6 +136,7 @@ export default function QrCode() {
       error: undefined,
     };
   }
+
   function CancelPix() {
     setDialog({
       ...dialog,
@@ -140,6 +161,7 @@ export default function QrCode() {
       }
     }
   }
+
   async function RefreshPix() {
     const result = await window.ElectronAPI.RefreshQr(dataQrCode.id);
     if (result.confirmed_payment) {
@@ -164,6 +186,7 @@ export default function QrCode() {
       return;
     }
   }
+
   function SendMessageToWhats(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (phone.length < 15) {
@@ -175,6 +198,7 @@ export default function QrCode() {
       phone: phone,
     });
   }
+
   function AlertDialog(message: string, callback?: Function) {
     setDialog({
       ...dialog,
@@ -202,7 +226,6 @@ export default function QrCode() {
         <ButtonHeader onClick={RefreshPix}>
           <RefreshIcon />
         </ButtonHeader>
-
         <p> Se7e Sistemas - PIX </p>
         <ButtonHeader onClick={CancelPix}>
           <CancelIcon />
