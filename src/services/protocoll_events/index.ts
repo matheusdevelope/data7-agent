@@ -30,11 +30,10 @@ function CloseQrCode({ qrcode, devices, callback }: ICloseQrCode) {
 
 function SendMessageOnWhatsapp(data: IWhatsAppMessage) {
   const newData = {
-    ...data,
+    text: data.message,
     phone: '55' + apenasNumeros(data.phone),
   };
   const params = MakeParamsFromObj(newData).join('^&');
-
   exec('start whatsapp://send?' + params, (e, stdout, stderr) => {
     stderr && console.error(stderr);
   });
