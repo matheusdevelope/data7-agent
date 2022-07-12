@@ -17,16 +17,16 @@ function EncodeURI(text: string) {
 function apenasNumeros(string: string) {
   return string.replace(/[^0-9]/g, '');
 }
-function OpenQrCode({ qrcode, devices, callback }: IOpenQrCode) {
+function CallQrCode({ qrcode, devices, callback }: IOpenQrCode) {
   const params = MakeParamsFromObj(qrcode).join('^&');
-  exec(`start data7://open?${params}`);
+  exec(`start data7://qrcode?${params}`);
   return callback({ type: EnumTypeOfCallback.success, message: 'Sucess on open window', error: null });
 }
-function CloseQrCode({ qrcode, devices, callback }: ICloseQrCode) {
-  const params = MakeParamsFromObj(qrcode).join('^&');
-  exec(`start data7://close?${params}`);
-  return callback({ type: EnumTypeOfCallback.success, message: 'Sucess on close window', error: null });
-}
+// function CloseQrCode({ qrcode, devices, callback }: ICloseQrCode) {
+//   const params = MakeParamsFromObj(qrcode).join('^&');
+//   exec(`start data7://qrcode?${params}`);
+//   return callback({ type: EnumTypeOfCallback.success, message: 'Sucess on close window', error: null });
+// }
 
 function SendMessageOnWhatsapp(data: IWhatsAppMessage) {
   const newData = {
@@ -38,4 +38,4 @@ function SendMessageOnWhatsapp(data: IWhatsAppMessage) {
     stderr && console.error(stderr);
   });
 }
-export { OpenQrCode, CloseQrCode, EnumDevices, SendMessageOnWhatsapp };
+export { CallQrCode, EnumDevices, SendMessageOnWhatsapp };

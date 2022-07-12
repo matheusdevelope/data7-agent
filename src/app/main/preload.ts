@@ -3,14 +3,9 @@ import { Global_State } from '../../global_state';
 import { CancelPix, RefreshPix } from '../../services/Api_Pix';
 import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
 
-function RegisterEventOpenQr(event: string, cb: Function) {
-  ipcRenderer.on(event, (e, args: IDataQrCode) => {
-    cb(args);
-  });
-}
-
 function RegisterEventUpdateQr(event: string, cb: Function) {
   ipcRenderer.on(event, (e, args: IDataQrCode) => {
+    console.log('no preload');
     cb(args);
   });
 }
@@ -59,7 +54,6 @@ function SendWhats(data: IWhatsAppMessage) {
 }
 
 export const ElectronAPI = {
-  RegisterEventOpenQr,
   RegisterEventUpdateQr,
   CancelQr,
   OpenQr,

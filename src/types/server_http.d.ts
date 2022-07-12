@@ -1,4 +1,5 @@
 interface IDataQrCode {
+  action: ActionsQrCode;
   id: string;
   img: string;
   link: string;

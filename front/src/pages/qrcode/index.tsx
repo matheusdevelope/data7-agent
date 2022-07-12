@@ -21,9 +21,10 @@ import {
 import Dialog from '../../components/modal_dialog';
 
 const InitialPix: IDataQrCode = {
+  action: 'none',
   id: '',
   img: '',
-  link: 'a',
+  link: '',
   phone: '',
   awaiting_payment: true,
   confirmed_payment: false,
@@ -81,21 +82,13 @@ export default function QrCode() {
   const [dialog, setDialog] = useState<IDialog>(DefaultDialog);
   const phoneRef = useRef<HTMLInputElement>(null);
   function AddListennersInApp() {
-    window.ElectronAPI?.RegisterEventOpenQr('new-qrcode', (qrcode: IDataQrCode) => {
-      setDataQrcode({
-        ...qrcode,
-        message: MessageBasedInStatus(qrcode),
-      });
-      window.ElectronAPI.OpenQr();
-    });
     window.ElectronAPI?.RegisterEventUpdateQr('update-qrcode', (qrcode: IDataQrCode) => {
       setDataQrcode({
         ...qrcode,
-        message: MessageBasedInStatus(qrcode),
+        message: qrcode.message || MessageBasedInStatus(qrcode),
       });
-      if (qrcode.canceled === true || qrcode.confirmed_payment === true) {
-        CloseWindow(2000);
-      }
+      if (qrcode.action === 'close') return CloseWindow(2000);
+      return window.ElectronAPI.OpenQr();
     });
   }
   function MessageBasedInStatus(qrcode: IDataQrCode) {
