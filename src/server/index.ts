@@ -2,8 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import http from 'http';
 
+import { Server } from 'socket.io';
+const { HandleSocket } = require('./socket');
+
 import ApiRoute from './routes';
 import { Global_State } from '../global_state';
+import { Middleware } from './middleware';
 
 const publicPath = '../dist';
 
@@ -16,7 +20,12 @@ export default function Server_Http(port: number = Global_State.port_server_http
   app.use(express.static(publicPath));
   app.use(cors());
   app.use(ApiRoute());
-  app.set('view engine', 'ejs');
+
+  const io = new Server(server);
+  io.use(Middleware);
+  io.on('connection', (socket) => {
+    HandleSocket(socket, io);
+  });
 
   return {
     execute: (cb: Function) => {

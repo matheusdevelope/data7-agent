@@ -63,7 +63,7 @@ export default function CreateTray(Server: any) {
         WindowQR.once('ready-to-show', () => {
           WindowQR.webContents.send(Global_State.events.login_with_qrcode, {
             ip: ip.address(),
-            port: '',
+            port: Global_State.port_server_http,
             token: GenerateJWT(),
           });
           WindowQR.show();

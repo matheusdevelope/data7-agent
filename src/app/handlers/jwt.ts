@@ -7,10 +7,12 @@ function GenerateJWT() {
 }
 
 function ValidateJWT(token: string) {
+  let result;
   jwt.verify(token, key, (err, decoded) => {
-    if (err) return false;
-    return decoded;
+    if (err) result = false;
+    result = decoded;
   });
+  return result;
 }
 
 export { GenerateJWT, ValidateJWT };
