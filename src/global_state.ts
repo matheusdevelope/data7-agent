@@ -7,6 +7,7 @@ const Global_State = {
     close_qrcode: 'close-qrcode',
     update_qrcode: 'update-qrcode',
     send_message_whats: 'send-message-whats',
+    login_with_qrcode: 'login_with_qrcode',
   },
 };
 

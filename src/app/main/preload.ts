@@ -1,12 +1,26 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import { toDataURL } from 'qrcode';
 import { Global_State } from '../../global_state';
 import { CancelPix, RefreshPix } from '../../services/Api_Pix';
 import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
 
 function RegisterEventUpdateQr(event: string, cb: Function) {
   ipcRenderer.on(event, (e, args: IDataQrCode) => {
-    console.log('no preload');
     cb(args);
+  });
+}
+interface IDataToLoginWithQrCode {
+  ip: string;
+  port: string;
+  token: string;
+}
+
+function RegisterEventLoginWithQr(cb: Function) {
+  ipcRenderer.on(Global_State.events.login_with_qrcode, (e, obj: IDataToLoginWithQrCode) => {
+    toDataURL(JSON.stringify(obj)).then((img) => {
+      return cb(img);
+    });
+    cb('none');
   });
 }
 async function CancelQr(id_qrcode: string): Promise<ICancelQr> {
@@ -60,6 +74,7 @@ export const ElectronAPI = {
   CloseQr,
   RefreshQr,
   SendWhats,
+  RegisterEventLoginWithQr,
 };
 
 contextBridge.exposeInMainWorld('ElectronAPI', ElectronAPI);

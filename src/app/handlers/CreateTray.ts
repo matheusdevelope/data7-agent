@@ -1,5 +1,9 @@
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import { resolve } from 'path';
+import { Global_State } from '../../global_state';
+import CreateWindow from './CreateWindow';
+import { GenerateJWT } from './jwt';
+import ip from 'ip';
 
 const assets_path = resolve(__dirname, '../', '../', 'assets', 'app');
 const iconTrayPath = resolve(assets_path, 'trayicon.png');
@@ -52,13 +56,20 @@ export default function CreateTray(Server: any) {
         });
       },
     },
-    //  {
-    //   label: "Open Window",
-    //   click: () => {
-    //     console.log(mainWindow);
-    //     mainWindow?.isEnabled() ? mainWindow.close() : createWindow();
-    //   },
-    // },
+    {
+      label: 'Open QrCode to Login',
+      click: () => {
+        const WindowQR = CreateWindow('login_with_qrcode');
+        WindowQR.once('ready-to-show', () => {
+          WindowQR.webContents.send(Global_State.events.login_with_qrcode, {
+            ip: ip.address(),
+            port: '',
+            token: GenerateJWT(),
+          });
+          WindowQR.show();
+        });
+      },
+    },
     {
       label: 'Encerar Aplicativo',
       click: () => app.quit(),

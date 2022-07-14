@@ -20,7 +20,7 @@ let Tray: Electron.CrossProcessExports.Tray;
 const Server = Server_Http();
 
 function StartIterface() {
-  Window = CreateWindow();
+  Window = CreateWindow('qrcode');
   Tray = CreateTray(Server);
   const { toggle } = ControlWindow(Window, Tray);
   Tray.on('click', toggle);

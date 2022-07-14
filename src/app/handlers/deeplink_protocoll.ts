@@ -46,7 +46,7 @@ function StringBoolean_To_Boolean(string: string) {
 }
 
 function HandleQrCode(deeplinkingUrl: string, Window: BrowserWindow) {
-  const query = parseUrl<IDataQrCode>(deeplinkingUrl).query;
+  const query = parseUrl(deeplinkingUrl).query;
   const qrcode: IDataQrCode = {
     action: query.action,
     id: query.id,
