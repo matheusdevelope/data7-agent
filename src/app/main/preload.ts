@@ -3,6 +3,21 @@ import { toDataURL } from 'qrcode';
 import { Global_State } from '../../global_state';
 import { CancelPix, RefreshPix } from '../../services/Api_Pix';
 import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
+import { SafeStorage } from '../handlers/storage';
+
+function SetLocalPassApp(password: string): Promise<true | Error> {
+  return ipcRenderer.invoke(Global_State.events.set_app_pass, password);
+}
+function GetLocalPassApp(): Promise<string | false | Error> {
+  return ipcRenderer.invoke(Global_State.events.get_app_pass);
+}
+
+function GetLocalConfig(): Promise<IObjectConfig[]> {
+  return ipcRenderer.invoke(Global_State.events.get_app_config);
+}
+function SetLocalConfig(config: IObjectConfig[]): Promise<void | Error> {
+  return ipcRenderer.invoke(Global_State.events.set_app_config, config);
+}
 
 function RegisterEventUpdateQr(event: string, cb: Function) {
   ipcRenderer.on(event, (e, args: IDataQrCode) => {
@@ -68,6 +83,10 @@ function SendWhats(data: IWhatsAppMessage) {
 }
 
 export const ElectronAPI = {
+  SetLocalPassApp,
+  GetLocalPassApp,
+  GetLocalConfig,
+  SetLocalConfig,
   RegisterEventUpdateQr,
   CancelQr,
   OpenQr,

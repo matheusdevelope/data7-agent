@@ -4,6 +4,7 @@ import { Global_State } from '../../global_state';
 import CreateWindow from './CreateWindow';
 import { GenerateJWT } from './jwt';
 import ip from 'ip';
+import { SafeStorage } from './storage';
 
 const assets_path = resolve(__dirname, '../', '../', 'assets', 'app');
 const iconTrayPath = resolve(assets_path, 'trayicon.png');
@@ -46,18 +47,9 @@ export default function CreateTray(Server: any) {
         });
       },
     },
+
     {
-      label: 'Sobre',
-      click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Sobre',
-          message: 'PIX Se7e Sistemas V.1.0.0',
-        });
-      },
-    },
-    {
-      label: 'Open QrCode to Login',
+      label: 'Registrar Dispositivo',
       click: () => {
         const WindowQR = CreateWindow('login_with_qrcode');
         WindowQR.once('ready-to-show', () => {
@@ -71,8 +63,31 @@ export default function CreateTray(Server: any) {
       },
     },
     {
+      label: 'Abrir Configurações',
+      click: () => {
+        const WindowQR = CreateWindow('/', { alwaysOnTop: true });
+        WindowQR.once('ready-to-show', () => {
+          WindowQR.show();
+        });
+      },
+    },
+    {
+      label: 'Reiniciar Aplicativo',
+      click: () => app.relaunch(),
+    },
+    {
       label: 'Encerar Aplicativo',
       click: () => app.quit(),
+    },
+    {
+      label: 'Sobre',
+      click: () => {
+        dialog.showMessageBox({
+          type: 'info',
+          title: 'Sobre',
+          message: 'PIX Se7e Sistemas V.1.0.0',
+        });
+      },
     },
   ];
 

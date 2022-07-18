@@ -1,13 +1,13 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import { resolve } from 'path';
 import { Global_State } from '../../global_state';
 
-export default function CreateWindow(route: string): BrowserWindow {
+export default function CreateWindow(route: string, options?: BrowserWindowConstructorOptions): BrowserWindow {
   const win = new BrowserWindow({
     width: 500,
     height: 460,
     show: false,
-    alwaysOnTop: true,
+    alwaysOnTop: false,
     frame: true,
     autoHideMenuBar: true,
     resizable: true,
@@ -15,6 +15,7 @@ export default function CreateWindow(route: string): BrowserWindow {
     webPreferences: {
       preload: resolve(__dirname, '..', 'main', 'preload.js'),
     },
+    ...options,
   });
 
   if (Global_State.isDev) {

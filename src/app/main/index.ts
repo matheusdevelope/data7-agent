@@ -20,10 +20,10 @@ let Tray: Electron.CrossProcessExports.Tray;
 const Server = Server_Http();
 
 function StartIterface() {
-  Window = CreateWindow('qrcode');
+  Window = CreateWindow('qrcode', { alwaysOnTop: true });
   Tray = CreateTray(Server);
-  const { toggle } = ControlWindow(Window, Tray);
-  Tray.on('click', toggle);
+  // const { toggle } = ControlWindow(Window, Tray);
+  // Tray.on('click', toggle);
   RegisterListenersIpcMain(Window);
   RegisterShortcuts(Window).F5();
 }

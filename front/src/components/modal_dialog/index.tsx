@@ -1,5 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { AreaMessage, Button, Container, LineButtons, Message, Text, Title } from './style';
+export const DefaultDialog: IDialog = {
+  isOpen: false,
+  title: 'Atenção',
+  message: '',
+  onClickOK: () => null,
+  onClickCancel: undefined,
+};
 
 export default function Dialog({
   isOpen,
