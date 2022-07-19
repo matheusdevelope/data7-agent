@@ -1,5 +1,10 @@
+import ip from 'ip';
+import { userInfo } from 'os';
+
 const Global_State = {
   isDev: process.env.IS_DEV === 'true',
+  local_ip: ip.address(),
+  username_machine: userInfo().username,
   port_server_http: 3500,
   protocoll_register: 'data7',
   events: {

@@ -2,9 +2,7 @@ import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import { resolve } from 'path';
 import { Global_State } from '../../global_state';
 import CreateWindow from './CreateWindow';
-import { GenerateJWT } from './jwt';
-import ip from 'ip';
-import { SafeStorage } from './storage';
+import { DataToLoginMobile, URL_Login_Mobile } from './socket';
 
 const assets_path = resolve(__dirname, '../', '../', 'assets', 'app');
 const iconTrayPath = resolve(assets_path, 'trayicon.png');
@@ -43,7 +41,6 @@ export default function CreateTray(Server: any) {
           menuTemplate[1].enabled = true;
           menuTemplate[2].enabled = false;
           buildTrayMenu(menuTemplate);
-          console.log('Stop: ');
         });
       },
     },
@@ -53,11 +50,7 @@ export default function CreateTray(Server: any) {
       click: () => {
         const WindowQR = CreateWindow('login_with_qrcode');
         WindowQR.once('ready-to-show', () => {
-          WindowQR.webContents.send(Global_State.events.login_with_qrcode, {
-            ip: ip.address(),
-            port: Global_State.port_server_http,
-            token: GenerateJWT(),
-          });
+          WindowQR.webContents.send(Global_State.events.login_with_qrcode, URL_Login_Mobile(DataToLoginMobile));
           WindowQR.show();
         });
       },
