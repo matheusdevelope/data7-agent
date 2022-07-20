@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { Global_State } from '../../global_state';
-import { SafeStorage, Storage } from './storage';
+import { SafeStorage, Storage } from '../../services/local_storage';
 
 function RegisterListenersIpcMain(Window: BrowserWindow) {
   ipcMain.handle(Global_State.events.set_app_pass, (event, password: string) => {

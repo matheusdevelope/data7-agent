@@ -1,4 +1,5 @@
 import { Global_State } from '../../global_state';
+import { GenerateApplicationID } from '../../services/local_storage';
 import { MakeParamsFromObj } from '../../utils';
 import { GenerateJWT } from './jwt';
 
@@ -10,6 +11,7 @@ const DataToLoginMobile = {
 };
 
 const URL_Login_Mobile = (DataToLoginMobile: IDataToLoginMobile) => {
+  GenerateApplicationID(DataToLoginMobile.username_machine);
   const baseURL = 'data7://login?';
   const params = MakeParamsFromObj(DataToLoginMobile).join('&');
   return `${baseURL}${params}`;

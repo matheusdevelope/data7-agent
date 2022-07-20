@@ -6,10 +6,12 @@ function GenerateJWT(expiration_seconds?: number) {
   });
 }
 
-function ValidateJWT<T>(token: string) {
-  let result: T | string | jwt.JwtPayload | undefined | false;
+function ValidateJWT(token: string): string | jwt.JwtPayload | false | undefined {
+  let result: string | jwt.JwtPayload | undefined | false;
   jwt.verify(token, key, (err, decoded) => {
-    if (err) result = false;
+    if (err) {
+      result = false;
+    }
     result = decoded;
   });
   return result;

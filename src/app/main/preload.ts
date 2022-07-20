@@ -3,7 +3,7 @@ import { toDataURL } from 'qrcode';
 import { Global_State } from '../../global_state';
 import { CancelPix, RefreshPix } from '../../services/Api_Pix';
 import { SendMessageOnWhatsapp } from '../../services/protocoll_events';
-import { SafeStorage } from '../handlers/storage';
+import { SafeStorage } from '../../services/local_storage';
 
 function SetLocalPassApp(password: string): Promise<true | Error> {
   return ipcRenderer.invoke(Global_State.events.set_app_pass, password);
