@@ -1,6 +1,9 @@
 import { app, dialog, Menu, nativeImage, Tray } from 'electron';
 import { resolve } from 'path';
 import { Global_State } from '../../global_state';
+import { Storage } from '../../services/local_storage';
+import { GetAplicationsIDs } from '../../services/local_storage/Applications_IDs_By_Username';
+import { GetDevicesMobile } from '../../services/local_storage/Devices';
 import CreateWindow from './CreateWindow';
 import { DataToLoginMobile, URL_Login_Mobile } from './login_mobile';
 
@@ -63,6 +66,22 @@ export default function CreateTray(Server: any) {
           WindowQR.show();
         });
       },
+    },
+    {
+      label: 'Exibir Lista IDs Aplicativo',
+      click: () => console.log(GetAplicationsIDs()),
+    },
+    {
+      label: 'Exibir Lista Devices',
+      click: () => console.log(GetDevicesMobile()),
+    },
+    {
+      label: 'Exibir Storage',
+      click: () => console.log(Storage),
+    },
+    {
+      label: 'Limpar Local Storage',
+      click: () => console.log(Storage.clear()),
     },
     {
       label: 'Reiniciar Aplicativo',

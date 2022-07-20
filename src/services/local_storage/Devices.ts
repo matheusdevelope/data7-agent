@@ -33,12 +33,12 @@ function RegisterDeviceMobile(device: IDeviceMobile): IDeviceMobile | false {
 
 function DeleteDeviceMobile(id: string): boolean {
   let devices = GetDevicesMobile();
-  let device = GetDeviceMobile(id);
   if (!devices) return true;
-  const index = devices.findIndex((obj) => obj.id === id);
-  devices = devices.splice(index, 1);
   try {
-    Storage.set('devices_mobile', devices);
+    Storage.set(
+      'devices_mobile',
+      devices.filter((obj) => obj.id !== id),
+    );
     return true;
   } catch (error) {
     console.error(error);

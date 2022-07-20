@@ -33,6 +33,8 @@ function GenerateApplicationID(username: string) {
       Storage.set('application_ids', [newApplicationID]);
       return newApplicationID;
     } catch (error) {
+      console.error(error);
+
       return false;
     }
   }
@@ -49,6 +51,7 @@ function GenerateApplicationID(username: string) {
         Storage.set('application_ids', [...IDs, newApplicationID]);
         return newApplicationID;
       } catch (error) {
+        console.error(error);
         return false;
       }
     }
@@ -70,6 +73,7 @@ function GenerateApplicationID(username: string) {
     Storage.set('application_ids', [newApplicationID]);
     return newApplicationID;
   } catch (error) {
+    console.error(error);
     return false;
   }
 }
