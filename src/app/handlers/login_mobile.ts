@@ -1,5 +1,5 @@
 import { Global_State } from '../../global_state';
-import { GenerateApplicationID } from '../../services/local_storage';
+import { GenerateApplicationID } from '../../services/local_storage/Applications_IDs_By_Username';
 import { MakeParamsFromObj } from '../../utils';
 import { GenerateJWT } from './jwt';
 
@@ -7,7 +7,7 @@ const DataToLoginMobile = {
   ip: Global_State.local_ip,
   username_machine: Global_State.username_machine,
   port: Global_State.port_server_http,
-  token: GenerateJWT(15),
+  token: GenerateJWT(60 * 60),
 };
 
 const URL_Login_Mobile = (DataToLoginMobile: IDataToLoginMobile) => {

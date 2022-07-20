@@ -1,7 +1,6 @@
 import { safeStorage } from 'electron';
 import Store, { Schema } from 'electron-store';
-import { GenerateJWT, ValidateJWT } from '../../app/handlers/jwt';
-const Expiration_JWT = 180;
+
 const DefaultConfig = [
   { key: 'db_host', value: 'localhost', label: 'Host Banco de Dados', type: 'text', order: 1 },
   { key: 'db_pass', value: '', label: 'Senha Banco de Dados', type: 'text', order: 2 },
@@ -37,12 +36,6 @@ const Schema_Storage: Schema<Record<string, string>> = {
   },
 };
 
-interface IApplicationID {
-  username: string;
-  id: string;
-  identification: string;
-}
-
 const Storage = new Store({
   name: 'the_config',
   watch: true,
@@ -75,71 +68,4 @@ const SafeStorage = {
   },
 };
 
-function GetAplicationsIDs(): IApplicationID[] | false {
-  if (!Storage.has('application_ids')) return false;
-  const IDs = Storage.get('application_ids') as unknown as IApplicationID[];
-  return IDs;
-}
-function GetAplicationData(username: string): IApplicationID | undefined | false {
-  const IDs = GetAplicationsIDs();
-  if (!IDs) return false;
-  return IDs.find((obj) => (obj.username = username));
-}
-function ValidateApplicationID(id: string) {
-  const Payload = ValidateJWT(id);
-  if (typeof Payload == 'boolean') {
-    return false;
-  }
-  return Payload;
-}
-
-function GenerateApplicationID(username: string) {
-  let AplicationID = GetAplicationData(username);
-  if (AplicationID === false) {
-    try {
-      const newApplicationID = { username, id: GenerateJWT(Expiration_JWT), identification: username };
-      Storage.set('application_ids', [newApplicationID]);
-      return newApplicationID;
-    } catch (error) {
-      return false;
-    }
-  }
-  let IDs = GetAplicationsIDs();
-  if (IDs) {
-    //Existe uma lista de ID, mas não pra esse user
-    if (typeof AplicationID === undefined) {
-      try {
-        const newApplicationID: IApplicationID = {
-          username,
-          id: GenerateJWT(Expiration_JWT),
-          identification: username,
-        };
-        Storage.set('application_ids', [...IDs, newApplicationID]);
-        return newApplicationID;
-      } catch (error) {
-        return false;
-      }
-    }
-
-    //Já Existe esse user na lista
-    if (AplicationID) {
-      //Verifica se o ID ainda é valido (renova caso não seja)
-      if (ValidateJWT(AplicationID.id) === false) {
-        const index = IDs.findIndex((obj) => obj.username === username);
-        const newApplicationID: IApplicationID = { ...IDs[index], id: GenerateJWT(Expiration_JWT) };
-        IDs.splice(index, 1, newApplicationID);
-        return newApplicationID;
-      }
-      return AplicationID;
-    }
-  }
-  try {
-    const newApplicationID = { username, id: GenerateJWT(Expiration_JWT), identification: username };
-    Storage.set('application_ids', [newApplicationID]);
-    return newApplicationID;
-  } catch (error) {
-    return false;
-  }
-}
-
-export { SafeStorage, Storage, GetAplicationsIDs, GetAplicationData, ValidateApplicationID, GenerateApplicationID };
+export { SafeStorage, Storage };
